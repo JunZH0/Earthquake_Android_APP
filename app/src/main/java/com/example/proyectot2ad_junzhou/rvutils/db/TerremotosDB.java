@@ -1,4 +1,4 @@
-package com.example.proyectot2ad_junzhou.db;
+package com.example.proyectot2ad_junzhou.rvutils.db;
 
 import android.content.Context;
 
@@ -13,7 +13,7 @@ import com.example.proyectot2ad_junzhou.entity.Terremotos;
 
 @Database(entities = {Terremotos.class, PaisesAfectados.class}, version = 1)
 public abstract class TerremotosDB extends RoomDatabase {
-
+// Clase para la creacion de la base de datos y la conexion con los DAOs
         public abstract TerremotosDao terremotosDao();
         public abstract PaisesAfectadosDao paisesAfectadosDao();
 

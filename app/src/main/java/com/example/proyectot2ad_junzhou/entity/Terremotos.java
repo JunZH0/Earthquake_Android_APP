@@ -1,5 +1,6 @@
 package com.example.proyectot2ad_junzhou.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
@@ -7,7 +8,8 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "TERREMOTOS", indices = {@Index(value = {"nom_disp"}, unique = true)})
 public class Terremotos {
-    @PrimaryKey()
+    @PrimaryKey
+    @NonNull
     public String fecha_Hora;
 
     @ColumnInfo (name = "magnitud")

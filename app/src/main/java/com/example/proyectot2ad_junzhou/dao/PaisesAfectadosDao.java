@@ -23,6 +23,9 @@ public interface PaisesAfectadosDao {
     @Query("SELECT * FROM PAISES_AFECTADOS WHERE fecha_Hora = :fecha_Hora")
     public PaisesAfectados selectByFechaHora(String fecha_Hora);
 
+    @Query("SELECT pais FROM PAISES_AFECTADOS ")
+    public List<String> selectPaises();
+
     @Insert
     public long insert(PaisesAfectados paisesAfectados);
 

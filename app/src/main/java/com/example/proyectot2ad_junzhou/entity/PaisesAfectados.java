@@ -1,5 +1,6 @@
 package com.example.proyectot2ad_junzhou.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -11,11 +12,12 @@ import androidx.room.PrimaryKey;
         parentColumns = "fecha_Hora",
         childColumns = "fecha_Hora",
         onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = {"nombre"},unique = true)})
+        indices = {@Index(value = {"pais"},unique = true)})
 
 public class PaisesAfectados {
 
-    @PrimaryKey()
+    @PrimaryKey
+    @NonNull
     public String fecha_Hora;
 
     @ColumnInfo(name = "pais")

@@ -3,4 +3,7 @@
     <string name="strEspFiltros">Filtros</string>
     <string name="strESPConsulta">Consultar</string>
     <string name="strPlaceholder">TextView</string>
+    <string name="stringESPAnio">Año</string>
+    <string name="stringESPpais">Pais</string>
+    <string name="StringESPmes">Mes</string>
 </resources>
