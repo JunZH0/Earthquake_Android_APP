@@ -1,12 +1,10 @@
 package com.example.proyectot2ad_junzhou;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Dao;
-import androidx.room.Room;
 
-import android.content.Intent;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +12,7 @@ import android.widget.Button;
 import com.example.proyectot2ad_junzhou.dao.TerremotosDao;
 import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
 import com.example.proyectot2ad_junzhou.entity.Terremotos;
-import com.example.proyectot2ad_junzhou.rvutils.db.TerremotoAdapter;
+import com.example.proyectot2ad_junzhou.rvutils.db.TerremotosAdapter;
 import com.example.proyectot2ad_junzhou.rvutils.db.TerremotosDB;
 
 import java.io.File;
@@ -24,11 +22,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnDatosListener {
 
-    Button btnFiltro;
-    Button btnConsulta;
-    RecyclerView rvTerremotos;
-    TerremotosDB tDB;
-    TerremotoAdapter tAdapter;
+    private Button btnFiltro;
+    private Button btnConsulta;
+    private RecyclerView rvTerremotos;
+    private TerremotosDB tDB;
+    private TerremotosAdapter tAdapter;
+    private List<Terremotos> listaTerremotos;
 
 
     @Override
@@ -44,6 +43,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConsulta.setOnClickListener((View.OnClickListener) this);
 
         initDatos();
+        cargarRecycleView();
+
+
+
+    }
+
+    private void cargarRecycleView() {
+        listaTerremotos = new ArrayList<>();
+        tAdapter = new TerremotosAdapter(listaTerremotos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        rvTerremotos.setLayoutManager(layoutManager);
+        rvTerremotos.setItemAnimator(new DefaultItemAnimator());
+        rvTerremotos.setAdapter(tAdapter);
+
+        tDB = TerremotosDB.getDatabase(this);
+
+        TerremotosDao tDao = tDB.terremotosDao();
+
+        List<Terremotos> terremotosList = tDao.getAll();
+        TerremotosAdapter adapter = new TerremotosAdapter(terremotosList);
+        rvTerremotos.setAdapter(adapter);
 
     }
 
@@ -159,10 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FilterDialog filterDialog = new FilterDialog();
             filterDialog.show(getSupportFragmentManager(), "FilterDialog");
         } else if (view.getId() == R.id.btnQuery) {
-            // hace una consulta a la base de datos y muestra los resultados en el recycler view
-            tDB = TerremotosDB.getDatabase(this);
-            List<Terremotos> listaTerremotos = tDB.terremotosDao().getAll();
-           // TODO
+
 
         }
     }

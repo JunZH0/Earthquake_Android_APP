@@ -8,17 +8,17 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "PAISES_AFECTADOS",
+        primaryKeys = {"fecha_Hora", "pais"},
         foreignKeys = {@ForeignKey(entity = Terremotos.class,
-        parentColumns = "fecha_Hora",
-        childColumns = "fecha_Hora",
-        onDelete = ForeignKey.CASCADE)})
-
+                parentColumns = "fecha_Hora",
+                childColumns = "fecha_Hora",
+                onDelete = ForeignKey.CASCADE)})
 public class PaisesAfectados {
 
-    @PrimaryKey
     @NonNull
     public String fecha_Hora;
 
+    @NonNull
     @ColumnInfo(name = "pais")
     public String pais;
 
@@ -36,5 +36,4 @@ public class PaisesAfectados {
     }
 
 }
-
 

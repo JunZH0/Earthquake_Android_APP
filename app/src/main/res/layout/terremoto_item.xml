@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".terremotoItem">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tvItemFecha"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Fecha y Hora" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tvItemMagnitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Magnitud" />
+
+    <TextView
+        android:id="@+id/tvItemNomDisp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dispositivo" />
+
+    <TextView
+        android:id="@+id/tvItemCoord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coordenadas" />
+
+    <TextView
+        android:id="@+id/tvItemLugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lugar" />
+
+    <TextView
+        android:id="@+id/tvItemMuertes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Muertes" />
+
+</LinearLayout>
