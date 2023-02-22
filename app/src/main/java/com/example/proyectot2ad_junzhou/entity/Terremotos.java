@@ -35,4 +35,29 @@ public class Terremotos {
         this.lugar = lugar;
         this.muertes = muertes;
     }
+
+    public String getFecha_Hora() {
+        return fecha_Hora;
+    }
+
+    public Double getMagnitud() {
+        return magnitud;
+    }
+
+    public String getNom_disp() {
+        return nom_disp;
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public String getMuertes() {
+        return muertes;
+    }
+
 }

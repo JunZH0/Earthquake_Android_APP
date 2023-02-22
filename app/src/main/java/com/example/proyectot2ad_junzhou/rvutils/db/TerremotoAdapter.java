@@ -6,17 +6,26 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TerremotoAdapter extends RecyclerView.Adapter<TerremotoAdapter.TerremotoVH>  {
+import com.example.proyectot2ad_junzhou.entity.Terremotos;
 
+import java.util.List;
+
+public class TerremotoAdapter extends RecyclerView.Adapter<TerremotoAdapter.ViewHolder> {
+
+    private List<Terremotos> terremotos;
+
+    public TerremotoAdapter(List<Terremotos> terremotos) {
+        this.terremotos = terremotos;
+    }
 
     @NonNull
     @Override
-    public TerremotoVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TerremotoVH holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
     }
 
@@ -25,9 +34,8 @@ public class TerremotoAdapter extends RecyclerView.Adapter<TerremotoAdapter.Terr
         return 0;
     }
 
-    public static class TerremotoVH extends RecyclerView.ViewHolder {
-
-        public TerremotoVH(@NonNull View itemView) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
     }

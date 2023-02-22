@@ -11,8 +11,7 @@ import androidx.room.PrimaryKey;
         foreignKeys = {@ForeignKey(entity = Terremotos.class,
         parentColumns = "fecha_Hora",
         childColumns = "fecha_Hora",
-        onDelete = ForeignKey.CASCADE)},
-        indices = {@Index(value = {"pais"},unique = true)})
+        onDelete = ForeignKey.CASCADE)})
 
 public class PaisesAfectados {
 
@@ -27,6 +26,15 @@ public class PaisesAfectados {
         this.fecha_Hora = fecha_Hora;
         this.pais = pais;
     }
+
+    public String getFecha_Hora() {
+        return fecha_Hora;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
 }
 
 

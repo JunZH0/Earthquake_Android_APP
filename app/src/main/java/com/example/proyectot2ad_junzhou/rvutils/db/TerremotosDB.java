@@ -23,7 +23,7 @@ public static TerremotosDB getDatabase(Context context) {
             if (terremotosDB == null) {
                 terremotosDB = Room.databaseBuilder(
                                 context.getApplicationContext(),
-                                TerremotosDB.class, "TERREMOTOS_DB")
+                                TerremotosDB.class, "terremotos.db")
                         .allowMainThreadQueries()
                         .build();
             }

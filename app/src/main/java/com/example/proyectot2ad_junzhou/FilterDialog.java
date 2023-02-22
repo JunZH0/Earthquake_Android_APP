@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,21 +24,22 @@ public class FilterDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        spnMes = (Spinner) getActivity().findViewById(R.id.spnMes);
-        spnPais = (Spinner) getActivity().findViewById(R.id.spnPais);
 
 
-        //iniSPNMes();
-        iniSPNPais();
+//      Construimos el Dialog que retorna el método
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        View v = getActivity().getLayoutInflater().inflate(R.layout.activity_filter_dialog, null);
+        builder.setView(v);
+        spnMes = v.findViewById(R.id.spnMes);
+        spnPais = v.findViewById(R.id.spnPais);
 
-// Construimos el Dialog que retorna el método
-        AlertDialog.Builder builder = new
-                AlertDialog.Builder(getActivity());
-        // Obtenemos un LayoutInflater para asignarle un layout
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        // le asignamos el layout que hemos definido
-        builder.setView(inflater.inflate(R.layout.activity_filter_dialog, null));
+        // agregar los datos al spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.meses, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMes.setAdapter(adapter);
+
 
 // configuramos el diálogo
         builder.setTitle("Filtros")
@@ -47,13 +49,13 @@ public class FilterDialog extends DialogFragment {
                                 Toast.makeText(getActivity(), "Datos aceptados",
                                         Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
-                                // PENDIENTE DE IMPLEMENTAR
+                                // TODO PENDIENTE DE IMPLEMENTAR
                             }
                         })
                 .setNegativeButton("Cancelar", new
                         DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // Cancelar > cerrar el cuadro de diálogo
+                                // cerrar el dialogo
                                 dialog.dismiss();
                             }
                         });
@@ -81,15 +83,4 @@ public class FilterDialog extends DialogFragment {
         super.onDetach();
     }
 
-    private void iniSPNPais() {
-
-    }
-
-    private void iniSPNMes() {
-        // crear array de meses y añadirlo al spinner
-        String[] meses = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-
-        spnMes.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, meses));
-    }
 }
