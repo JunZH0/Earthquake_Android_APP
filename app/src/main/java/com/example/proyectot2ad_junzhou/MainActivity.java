@@ -43,27 +43,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConsulta.setOnClickListener((View.OnClickListener) this);
 
         initDatos();
-        cargarRecycleView();
-
 
 
     }
 
     private void cargarRecycleView() {
+        // Arraylist para guardar los objetos que se van a mostrar en el RecyclerView
         listaTerremotos = new ArrayList<>();
+        // Creacion del adaptador
         tAdapter = new TerremotosAdapter(listaTerremotos);
+        // Creacion del LayoutManager y asignacion al RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rvTerremotos.setLayoutManager(layoutManager);
         rvTerremotos.setItemAnimator(new DefaultItemAnimator());
         rvTerremotos.setAdapter(tAdapter);
 
-        tDB = TerremotosDB.getDatabase(this);
 
+        tDB = TerremotosDB.getDatabase(this);
+        // Instancia del DAO
         TerremotosDao tDao = tDB.terremotosDao();
 
+        // Obtener todos los terremotos a traves de la Query getAll()
         List<Terremotos> terremotosList = tDao.getAll();
         TerremotosAdapter adapter = new TerremotosAdapter(terremotosList);
         rvTerremotos.setAdapter(adapter);
+
 
     }
 
@@ -179,8 +183,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FilterDialog filterDialog = new FilterDialog();
             filterDialog.show(getSupportFragmentManager(), "FilterDialog");
         } else if (view.getId() == R.id.btnQuery) {
-
-
+            cargarRecycleView();
         }
     }
 
