@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProyectoT2AD_JunZhou</string>
+    <string name="app_name">Terremotos</string>
     <string name="strEspFiltros">Filtros</string>
     <string name="strESPConsulta">Consultar</string>
     <string name="strPlaceholder">TextView</string>

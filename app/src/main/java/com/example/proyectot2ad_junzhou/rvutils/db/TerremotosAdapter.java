@@ -31,6 +31,7 @@ public class TerremotosAdapter extends RecyclerView.Adapter<TerremotosAdapter.Te
 
     @Override
     public void onBindViewHolder(@NonNull TerremotoViewHolder holder, int position) {
+        // Asignar los valores a los elementos del layout
         Terremotos terremoto = terremotosList.get(position);
         holder.fecha_Hora.setText(terremoto.getFecha_Hora());
         holder.magnitud.setText(String.valueOf(terremoto.getMagnitud()));
@@ -48,6 +49,7 @@ public class TerremotosAdapter extends RecyclerView.Adapter<TerremotosAdapter.Te
     public class TerremotoViewHolder extends RecyclerView.ViewHolder {
         public TextView fecha_Hora, magnitud, nom_disp, coordenadas, lugar, muertes;
 
+        // Asignar los elementos del layout al objeto
         public TerremotoViewHolder(@NonNull View itemView) {
             super(itemView);
             fecha_Hora = itemView.findViewById(R.id.tvItemFecha);

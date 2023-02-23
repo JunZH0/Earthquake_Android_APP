@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
+import com.example.proyectot2ad_junzhou.entity.Terremotos;
 
 import java.util.List;
 
@@ -17,13 +18,9 @@ public interface PaisesAfectadosDao {
 
     // TODO Implementar query con filtros
 
-    @Query("SELECT * FROM PAISES_AFECTADOS WHERE pais = :pais")
-    public PaisesAfectados selectByPais(String pais);
+    // seleccionar por pais y año
 
-    @Query("SELECT * FROM PAISES_AFECTADOS WHERE fecha_Hora = :fecha_Hora")
-    public PaisesAfectados selectByFechaHora(String fecha_Hora);
-
-    @Query("SELECT pais FROM PAISES_AFECTADOS ")
+    @Query("SELECT DISTINCT pais FROM PAISES_AFECTADOS")
     public List<String> selectPaises();
 
     @Insert

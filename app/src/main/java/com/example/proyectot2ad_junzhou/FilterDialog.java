@@ -11,14 +11,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.example.proyectot2ad_junzhou.dao.PaisesAfectadosDao;
+import com.example.proyectot2ad_junzhou.dao.TerremotosDao;
+import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
+import com.example.proyectot2ad_junzhou.rvutils.db.TerremotosDB;
+
+import java.util.List;
 
 public class FilterDialog extends DialogFragment {
 
     OnDatosListener listener;
     Spinner spnPais;
     Spinner spnMes;
+    EditText txtAnio;
+    TerremotosDB db;
 
     @NonNull
     @Override
@@ -33,6 +43,7 @@ public class FilterDialog extends DialogFragment {
         builder.setView(v);
         spnMes = v.findViewById(R.id.spnMes);
         spnPais = v.findViewById(R.id.spnPais);
+        txtAnio = v.findViewById(R.id.etAnio);
 
         // agregar los datos al spinner
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
@@ -40,8 +51,26 @@ public class FilterDialog extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnMes.setAdapter(adapter);
 
+        // agregar los datos al spinner de paises con Query, llamada a la base de datos y obtencion de pais unicos
+        db = TerremotosDB.getDatabase(getActivity());
+        PaisesAfectadosDao paisDao = db.paisesAfectadosDao();
 
-// configuramos el diálogo
+        // Query
+        List<String> paises = paisDao.selectPaises();
+
+        // Agregar "Sin Filtro" al inicio de la lista
+        paises.add(0, "Sin Filtro");
+
+        ArrayAdapter<String> adapterPaises = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, paises);
+
+        adapterPaises.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spnPais.setAdapter(adapterPaises);
+
+        spnPais.setSelection(0);
+
+
         builder.setTitle("Filtros")
                 .setPositiveButton("Aceptar", new
                         DialogInterface.OnClickListener() {
@@ -49,7 +78,12 @@ public class FilterDialog extends DialogFragment {
                                 Toast.makeText(getActivity(), "Datos aceptados",
                                         Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
-                                // TODO PENDIENTE DE IMPLEMENTAR
+                                String pais = spnPais.getSelectedItem().toString();
+                                String mes = spnMes.getSelectedItem().toString();
+                                String anio = txtAnio.getText().toString();
+                                listener.onDatosListener(pais, mes, anio);
+
+                                dialog.dismiss();
                             }
                         })
                 .setNegativeButton("Cancelar", new

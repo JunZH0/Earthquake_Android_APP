@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Filter;
 
 import com.example.proyectot2ad_junzhou.dao.TerremotosDao;
 import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TerremotosDB tDB;
     private TerremotosAdapter tAdapter;
     private List<Terremotos> listaTerremotos;
+    private String pais;
+    private String mes;
+    private String anio;
 
 
     @Override
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConsulta.setOnClickListener((View.OnClickListener) this);
 
         initDatos();
+
 
 
     }
@@ -188,7 +193,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onDatosListener(String fecha_Hora, String pais) {
+    public void onDatosListener(String pais, String mes, String anio) {
+
+        TerremotosDB tDB = TerremotosDB.getDatabase(this);
+        TerremotosDao tDao = tDB.terremotosDao();
+
+        if (pais.equals("Sin filtro") && mes.equals("Sin filtro")) {
+            listaTerremotos = tDao.selectAnio(anio);
+        } else if (pais.equals("Sin filtro")) {
+            listaTerremotos = tDao.selectMesAnio(mes, anio);
+        } else if (mes.equals("Sin filtro")) {
+            listaTerremotos = tDao.selectPaisAnio(pais, anio);
+        } else {
+            listaTerremotos = tDao.selectPaisMesAnio(pais, mes, anio);
+
+        }
+
 
     }
 }
