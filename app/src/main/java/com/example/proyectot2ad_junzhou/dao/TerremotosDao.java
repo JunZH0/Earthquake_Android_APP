@@ -14,7 +14,6 @@ public interface TerremotosDao {
     @Query("SELECT * FROM TERREMOTOS")
     public List<Terremotos> getAll();
 
-    // TODO Implementar query con filtros
 
     // Seleccionar por mes y año
     @Query("SELECT * FROM TERREMOTOS WHERE fecha_Hora LIKE '%' ||:mes||  '%' AND fecha_Hora LIKE '%' ||:anio||  '%' ")

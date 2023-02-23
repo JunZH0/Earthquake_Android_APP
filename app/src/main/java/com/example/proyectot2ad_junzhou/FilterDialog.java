@@ -35,22 +35,51 @@ public class FilterDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
-
 //      Construimos el Dialog que retorna el método
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View v = getActivity().getLayoutInflater().inflate(R.layout.activity_filter_dialog, null);
         builder.setView(v);
+
         spnMes = v.findViewById(R.id.spnMes);
         spnPais = v.findViewById(R.id.spnPais);
         txtAnio = v.findViewById(R.id.etAnio);
 
-        // agregar los datos al spinner
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.meses, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnMes.setAdapter(adapter);
 
+        initSpinnerMes();
+
+        initSpinnerPais();
+
+
+        builder.setTitle("Filtros").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                            String pais = spnPais.getSelectedItem().toString();
+                            String mes = spnMes.getSelectedItem().toString();
+                            String anio = txtAnio.getText().toString();
+
+                            if (listener != null) {
+                                listener.onDatosListener(pais, mes, anio);
+                            }
+
+                        Toast.makeText(getActivity(), "Datos aceptados",
+                                Toast.LENGTH_SHORT).show();
+
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancelar", new
+                        DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // cerrar el dialogo
+                                dialog.dismiss();
+                            }
+                        });
+
+        return builder.create();
+    }
+
+    private void initSpinnerPais() {
         // agregar los datos al spinner de paises con Query, llamada a la base de datos y obtencion de pais unicos
         db = TerremotosDB.getDatabase(getActivity());
         PaisesAfectadosDao paisDao = db.paisesAfectadosDao();
@@ -65,46 +94,25 @@ public class FilterDialog extends DialogFragment {
                 android.R.layout.simple_spinner_item, paises);
 
         adapterPaises.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spnPais.setAdapter(adapterPaises);
 
-        spnPais.setSelection(0);
+    }
 
-
-        builder.setTitle("Filtros")
-                .setPositiveButton("Aceptar", new
-                        DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getActivity(), "Datos aceptados",
-                                        Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                                String pais = spnPais.getSelectedItem().toString();
-                                String mes = spnMes.getSelectedItem().toString();
-                                String anio = txtAnio.getText().toString();
-                                listener.onDatosListener(pais, mes, anio);
-
-                                dialog.dismiss();
-                            }
-                        })
-                .setNegativeButton("Cancelar", new
-                        DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // cerrar el dialogo
-                                dialog.dismiss();
-                            }
-                        });
-
-        return builder.create();
+    private void initSpinnerMes() {
+        // agregar los datos al spinner meses
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.meses, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMes.setAdapter(adapter);
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnDatosListener) {
+        try {
             listener = (OnDatosListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnDatosListener ");
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnDatosListener");
         }
     }
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Filter;
+import android.widget.TextView;
 
 import com.example.proyectot2ad_junzhou.dao.TerremotosDao;
 import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Button btnFiltro;
     private Button btnConsulta;
+    private TextView tvFiltro;
     private RecyclerView rvTerremotos;
     private TerremotosDB tDB;
     private TerremotosAdapter tAdapter;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnFiltro = findViewById(R.id.btnFilter);
         btnConsulta = findViewById(R.id.btnQuery);
         rvTerremotos = findViewById(R.id.rvTerremoto);
+        tvFiltro = findViewById(R.id.tvFiltros);
 
         btnFiltro.setOnClickListener((View.OnClickListener) this);
         btnConsulta.setOnClickListener((View.OnClickListener) this);
@@ -68,10 +71,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Instancia del DAO
         TerremotosDao tDao = tDB.terremotosDao();
 
+
+        // TODO crear todos las posibilidades de filtros
         // Obtener todos los terremotos a traves de la Query getAll()
         List<Terremotos> terremotosList = tDao.getAll();
         TerremotosAdapter adapter = new TerremotosAdapter(terremotosList);
         rvTerremotos.setAdapter(adapter);
+
 
 
     }
@@ -195,19 +201,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onDatosListener(String pais, String mes, String anio) {
 
-        TerremotosDB tDB = TerremotosDB.getDatabase(this);
-        TerremotosDao tDao = tDB.terremotosDao();
-
-        if (pais.equals("Sin filtro") && mes.equals("Sin filtro")) {
-            listaTerremotos = tDao.selectAnio(anio);
-        } else if (pais.equals("Sin filtro")) {
-            listaTerremotos = tDao.selectMesAnio(mes, anio);
-        } else if (mes.equals("Sin filtro")) {
-            listaTerremotos = tDao.selectPaisAnio(pais, anio);
-        } else {
-            listaTerremotos = tDao.selectPaisMesAnio(pais, mes, anio);
-
-        }
+        this.pais = pais;
+        this.mes = mes;
+        this.anio = anio;
+        tvFiltro.setText(" Pais: " + pais + " | Mes: " + mes + " | Año: " + anio);
 
 
     }
