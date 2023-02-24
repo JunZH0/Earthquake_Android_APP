@@ -21,6 +21,7 @@ import com.example.proyectot2ad_junzhou.dao.TerremotosDao;
 import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
 import com.example.proyectot2ad_junzhou.rvutils.db.TerremotosDB;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class FilterDialog extends DialogFragment {
@@ -58,6 +59,20 @@ public class FilterDialog extends DialogFragment {
                         String mes = spnMes.getSelectedItem().toString();
                         String anio = txtAnio.getText().toString();
 
+// Usando la            clase Calendar para obtener el año actual
+                        int anioActual = Calendar.getInstance().get(Calendar.YEAR);
+
+                        if (!anio.isEmpty()) {
+                            // Validar que el año introducido no sea mayor al año actual
+                            int anioInt = Integer.parseInt(anio);
+                            if (anioInt > anioActual) {
+                                Toast.makeText(getActivity(), "El año no puede ser mayor al año actual", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+
+                        // Si no se selecciona ningun filtro, se muestra "Sin Filtros"
+
                         if (TextUtils.isEmpty(pais)) {
                             pais = "Sin Filtros";
                         }
@@ -79,8 +94,6 @@ public class FilterDialog extends DialogFragment {
                         }
 
                         dialog.dismiss();
-
-
                     }
                 })
                 .setNegativeButton("Cancelar", new

@@ -73,32 +73,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (pais.equals("") && mes.equals("") && anio.equals("")) {
             listaTerremotos = tDao.getAll();
-            TerremotosAdapter adapter = new TerremotosAdapter(listaTerremotos);
-            rvTerremotos.setAdapter(adapter);
+            tAdapter = new TerremotosAdapter(listaTerremotos);
+            rvTerremotos.setAdapter(tAdapter);
         } else {
             if (pais.equals("Sin Filtros") && mes.equals("Sin Filtros") && anio.equals("Sin Filtros")) {
                 listaTerremotos = tDao.getAll();
+                comprobarContenido(tAdapter);
             } else if (pais.equals("Sin Filtros") && anio.equals("Sin Filtros")) {
                 listaTerremotos = tDao.selectTerremotosMes(mes);
+                comprobarContenido(tAdapter);
             } else if (anio.equals("Sin Filtros") && mes.equals("Sin Filtros")) {
                 listaTerremotos = tDao.selectTerremotosPais(pais);
+                comprobarContenido(tAdapter);
             } else if (mes.equals("Sin Filtros") && pais.equals("Sin Filtros")) {
                 listaTerremotos = tDao.selectTerremotosAnio(anio);
+                comprobarContenido(tAdapter);
             } else if (pais.equals("Sin Filtros")) {
                 listaTerremotos = tDao.selectTerremotosMesAnio(mes, anio);
+                comprobarContenido(tAdapter);
             } else if (anio.equals("Sin Filtros")) {
                 listaTerremotos = tDao.selectTerremotosMesPais(mes, pais);
+                comprobarContenido(tAdapter);
             } else if (mes.equals("Sin Filtros")) {
                 listaTerremotos = tDao.selectTerremotosAnioPais(anio, pais);
+                comprobarContenido(tAdapter);
             } else {
                 listaTerremotos = tDao.selectTerremotosMesAnioPais(mes, anio, pais);
+                comprobarContenido(tAdapter);
             }
 
-            TerremotosAdapter adapter = new TerremotosAdapter(listaTerremotos);
-            rvTerremotos.setAdapter(adapter);
+            tAdapter = new TerremotosAdapter(listaTerremotos);
+            rvTerremotos.setAdapter(tAdapter);
         }
 
     }
+
+    private void comprobarContenido(TerremotosAdapter tAdapter) {
+        if (listaTerremotos.isEmpty()) {
+            Toast.makeText(this, "No se han encontrado ningún dato", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void initDatos() {
 
