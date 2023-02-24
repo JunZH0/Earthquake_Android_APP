@@ -14,7 +14,6 @@ import androidx.room.PrimaryKey;
                 childColumns = "fecha_Hora",
                 onDelete = ForeignKey.CASCADE)})
 public class PaisesAfectados {
-
     @NonNull
     public String fecha_Hora;
 

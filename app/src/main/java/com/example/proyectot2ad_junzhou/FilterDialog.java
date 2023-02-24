@@ -37,7 +37,7 @@ public class FilterDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
-//      Construimos el Dialog que retorna el método
+        //Construimos el Dialog que retorna el método
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         View v = getActivity().getLayoutInflater().inflate(R.layout.activity_filter_dialog, null);
@@ -47,11 +47,9 @@ public class FilterDialog extends DialogFragment {
         spnPais = v.findViewById(R.id.spnPais);
         txtAnio = v.findViewById(R.id.etAnio);
 
-
         initSpinnerMes();
 
         initSpinnerPais();
-
 
         builder.setTitle("Filtros").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -59,7 +57,7 @@ public class FilterDialog extends DialogFragment {
                         String mes = spnMes.getSelectedItem().toString();
                         String anio = txtAnio.getText().toString();
 
-// Usando la            clase Calendar para obtener el año actual
+                        // Usando la clase Calendar para obtener el año actual
                         int anioActual = Calendar.getInstance().get(Calendar.YEAR);
 
                         if (!anio.isEmpty()) {
@@ -89,8 +87,6 @@ public class FilterDialog extends DialogFragment {
 
                         if (pais.equals("Sin Filtros") && mes.equals("Sin Filtros") && anio.equals("Sin Filtros")) {
                             Toast.makeText(getActivity(), "No se ha seleccionado ningún filtro", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getActivity(), "Filtros aplicados", Toast.LENGTH_SHORT).show();
                         }
 
                         dialog.dismiss();
@@ -127,7 +123,7 @@ public class FilterDialog extends DialogFragment {
     }
 
     private void initSpinnerMes() {
-        // agregar los datos al spinner meses
+        // agregar los datos al spinner meses con un array de strings en el archivo arrays.xml
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.meses, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
