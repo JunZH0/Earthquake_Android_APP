@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.proyectot2ad_junzhou.dao.TerremotosDao;
 import com.example.proyectot2ad_junzhou.entity.PaisesAfectados;
@@ -31,9 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TerremotosDB tDB;
     private TerremotosAdapter tAdapter;
     private List<Terremotos> listaTerremotos;
-    private String pais;
-    private String mes;
-    private String anio;
+    private String pais = "";
+    private String mes = "";
+    private String anio = "";
 
 
     @Override
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConsulta.setOnClickListener((View.OnClickListener) this);
 
         initDatos();
-
 
 
     }
@@ -71,14 +71,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Instancia del DAO
         TerremotosDao tDao = tDB.terremotosDao();
 
+        if (pais.equals("") && mes.equals("") && anio.equals("")) {
+            listaTerremotos = tDao.getAll();
+            TerremotosAdapter adapter = new TerremotosAdapter(listaTerremotos);
+            rvTerremotos.setAdapter(adapter);
+        } else {
+            if (pais.equals("Sin Filtros") && mes.equals("Sin Filtros") && anio.equals("Sin Filtros")) {
+                listaTerremotos = tDao.getAll();
+            } else if (pais.equals("Sin Filtros") && anio.equals("Sin Filtros")) {
+                listaTerremotos = tDao.selectTerremotosMes(mes);
+            } else if (anio.equals("Sin Filtros") && mes.equals("Sin Filtros")) {
+                listaTerremotos = tDao.selectTerremotosPais(pais);
+            } else if (mes.equals("Sin Filtros") && pais.equals("Sin Filtros")) {
+                listaTerremotos = tDao.selectTerremotosAnio(anio);
+            } else if (pais.equals("Sin Filtros")) {
+                listaTerremotos = tDao.selectTerremotosMesAnio(mes, anio);
+            } else if (anio.equals("Sin Filtros")) {
+                listaTerremotos = tDao.selectTerremotosMesPais(mes, pais);
+            } else if (mes.equals("Sin Filtros")) {
+                listaTerremotos = tDao.selectTerremotosAnioPais(anio, pais);
+            } else {
+                listaTerremotos = tDao.selectTerremotosMesAnioPais(mes, anio, pais);
+            }
 
-        // TODO crear todos las posibilidades de filtros
-        // Obtener todos los terremotos a traves de la Query getAll()
-        List<Terremotos> terremotosList = tDao.getAll();
-        TerremotosAdapter adapter = new TerremotosAdapter(terremotosList);
-        rvTerremotos.setAdapter(adapter);
-
-
+            TerremotosAdapter adapter = new TerremotosAdapter(listaTerremotos);
+            rvTerremotos.setAdapter(adapter);
+        }
 
     }
 
@@ -194,10 +212,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FilterDialog filterDialog = new FilterDialog();
             filterDialog.show(getSupportFragmentManager(), "FilterDialog");
         } else if (view.getId() == R.id.btnQuery) {
+            onDatosListener(pais, mes, anio);
             cargarRecycleView();
         }
     }
 
+
+    // Recoge los datos del dialogo a traves de la interfaz
     @Override
     public void onDatosListener(String pais, String mes, String anio) {
 

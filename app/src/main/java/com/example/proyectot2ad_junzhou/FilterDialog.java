@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -53,19 +54,33 @@ public class FilterDialog extends DialogFragment {
 
         builder.setTitle("Filtros").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        String pais = spnPais.getSelectedItem().toString();
+                        String mes = spnMes.getSelectedItem().toString();
+                        String anio = txtAnio.getText().toString();
 
-                            String pais = spnPais.getSelectedItem().toString();
-                            String mes = spnMes.getSelectedItem().toString();
-                            String anio = txtAnio.getText().toString();
+                        if (TextUtils.isEmpty(pais)) {
+                            pais = "Sin Filtros";
+                        }
+                        if (TextUtils.isEmpty(mes)) {
+                            mes = "Sin Filtros";
+                        }
+                        if (TextUtils.isEmpty(anio)) {
+                            anio = "Sin Filtros";
+                        }
 
-                            if (listener != null) {
-                                listener.onDatosListener(pais, mes, anio);
-                            }
+                        if (listener != null) {
+                            listener.onDatosListener(pais, mes, anio);
+                        }
 
-                        Toast.makeText(getActivity(), "Datos aceptados",
-                                Toast.LENGTH_SHORT).show();
+                        if (pais.equals("Sin Filtros") && mes.equals("Sin Filtros") && anio.equals("Sin Filtros")) {
+                            Toast.makeText(getActivity(), "No se ha seleccionado ningún filtro", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Filtros aplicados", Toast.LENGTH_SHORT).show();
+                        }
 
                         dialog.dismiss();
+
+
                     }
                 })
                 .setNegativeButton("Cancelar", new
@@ -88,7 +103,7 @@ public class FilterDialog extends DialogFragment {
         List<String> paises = paisDao.selectPaises();
 
         // Agregar "Sin Filtro" al inicio de la lista
-        paises.add(0, "Sin Filtro");
+        paises.add(0, "Sin Filtros");
 
         ArrayAdapter<String> adapterPaises = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, paises);

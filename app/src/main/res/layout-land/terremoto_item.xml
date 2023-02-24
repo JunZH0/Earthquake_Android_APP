@@ -59,9 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
-            android:textStyle="bold"
-            android:textColor="@color/titleYellow"
-            android:text="@string/itemFecha"
+            android:text="Fecha: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,9 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="@string/ItemNombre"
-            android:textStyle="bold"
-            android:textColor="@color/titleYellow"
+            android:text="Nombre: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvItemFecha" />
 
@@ -82,9 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="1dp"
-            android:textStyle="bold"
-            android:textColor="@color/titleYellow"
-            android:text="@string/ItemCoord"
+            android:text="Coordenadas:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvItemNomDisp" />
 
@@ -93,9 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textStyle="bold"
-            android:textColor="@color/titleYellow"
-            android:text="@string/ItemLugar"
+            android:text="Lugar: "
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvItemCoord" />
 
@@ -105,9 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="1dp"
-            android:textStyle="bold"
-            android:textColor="@color/titleYellow"
-            android:text="@string/ItemMuertes"
+            android:text="Muertes:"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvItemLugar" />
 
@@ -127,10 +117,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="@color/titleYellow"
-            android:textStyle="bold"
-            android:text="@string/ItemMagnitud"
+            android:layout_marginEnd="52dp"
+            android:text="Magnitud"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

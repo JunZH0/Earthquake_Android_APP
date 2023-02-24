@@ -14,25 +14,25 @@ public interface TerremotosDao {
     @Query("SELECT * FROM TERREMOTOS")
     public List<Terremotos> getAll();
 
+    @Query("SELECT * FROM TERREMOTOS WHERE fecha_hora LIKE '%' ||:mes||  '%'")
+    List<Terremotos> selectTerremotosMes(String mes);
+    @Query("SELECT * FROM TERREMOTOS WHERE fecha_hora LIKE '%' ||:mes|| '%' " +
+            "AND fecha_hora LIKE '%' ||:anio|| '%'")
+    List<Terremotos> selectTerremotosMesAnio(String mes, String anio);
+    @Query("SELECT * FROM TERREMOTOS t, PAISES_AFECTADOS p WHERE t.fecha_hora = p.fecha_hora AND t.fecha_hora LIKE '%' ||:mes|| '%' " +
+            "AND pais LIKE '%' ||:pais|| '%'")
+    List<Terremotos> selectTerremotosMesPais(String mes, String pais);
+    @Query("SELECT * FROM TERREMOTOS t, PAISES_AFECTADOS p WHERE t.fecha_hora = p.fecha_hora AND t.fecha_hora LIKE '%' ||:mes|| '%' " +
+            "AND t.fecha_hora LIKE '%' ||:anio|| '%' AND pais LIKE '%' ||:pais|| '%'")
+    List<Terremotos> selectTerremotosMesAnioPais(String mes, String anio, String pais);
+    @Query("SELECT * FROM TERREMOTOS WHERE fecha_hora LIKE '%' ||:anio|| '%'")
+    List<Terremotos> selectTerremotosAnio(String anio);
+    @Query("SELECT * FROM TERREMOTOS t, PAISES_AFECTADOS p WHERE t.fecha_hora = p.fecha_hora AND t.fecha_hora LIKE '%' ||:anio|| '%' " +
+            "AND pais LIKE '%' ||:pais|| '%'")
+    List<Terremotos> selectTerremotosAnioPais(String anio, String pais);
+    @Query("SELECT * FROM TERREMOTOS t, PAISES_AFECTADOS p WHERE pais LIKE '%' ||:pais|| '%' AND t.fecha_hora = p.fecha_hora")
+    List<Terremotos> selectTerremotosPais(String pais);
 
-    // Seleccionar por mes y año
-    @Query("SELECT * FROM TERREMOTOS WHERE fecha_Hora LIKE '%' ||:mes||  '%' AND fecha_Hora LIKE '%' ||:anio||  '%' ")
-    public List<Terremotos> selectMesAnio(String mes, String anio);
-
-    // Seleccionar por Año
-    @Query("SELECT * FROM TERREMOTOS WHERE fecha_Hora LIKE '%' ||:anio||  '%' ")
-    public List<Terremotos> selectAnio(String anio);
-
-    // Seleccionar por pais y año
-    @Query("SELECT * FROM PAISES_AFECTADOS WHERE pais = :pais AND fecha_Hora LIKE '%' ||:anio||  '%' ")
-    public List<Terremotos> selectPaisAnio(String pais, String anio);
-
-    // Seleccionar por pais mes y año
-    @Query("SELECT * FROM PAISES_AFECTADOS WHERE pais = :pais AND fecha_Hora LIKE '%' ||:mes||  '%' AND fecha_Hora LIKE '%' ||:anio||  '%' ")
-    public List<Terremotos> selectPaisMesAnio(String pais, String mes, String anio);
-
-    @Query("SELECT * FROM TERREMOTOS WHERE fecha_hora LIKE '%' ||:mes||  '%' ")
-    public List<Terremotos> selectMes(String mes);
 
     @Insert
     public long insert(Terremotos terremotos);

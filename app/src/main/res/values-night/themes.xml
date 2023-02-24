@@ -3,7 +3,7 @@
     <style name="Theme.ProyectoT2AD_JunZhou" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#C6B200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -13,6 +13,8 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:colorBackground">@color/black</item>
+        <item name="android:textColor" tools:targetApi="o">@color/white</item>
+
+        <item name="android:colorBackground">#111111</item>
     </style>
 </resources>

@@ -6,4 +6,10 @@
     <string name="stringESPAnio">Año</string>
     <string name="stringESPpais">Pais</string>
     <string name="StringESPmes">Mes</string>
+    <string name="itemFecha">Fecha:</string>
+    <string name="ItemNombre">Nombre:</string>
+    <string name="ItemCoord">Coordenadas:</string>
+    <string name="ItemLugar">Lugar:</string>
+    <string name="ItemMuertes">Muertes:</string>
+    <string name="ItemMagnitud">Magnitud</string>
 </resources>

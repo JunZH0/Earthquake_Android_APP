@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="meses">
-        <item>Sin filtro</item>
+        <item>Sin Filtros</item>
         <item>Enero</item>
         <item>Febrero</item>
         <item>Marzo</item>

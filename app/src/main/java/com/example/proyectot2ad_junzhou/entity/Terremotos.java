@@ -18,21 +18,20 @@ public class Terremotos {
     @ColumnInfo (name = "nom_disp")
     public String nom_disp;
 
-    @ColumnInfo (name = "coordenadas")
-    public String coordenadas;
-
     @ColumnInfo (name = "lugar")
     public String lugar;
+    @ColumnInfo (name = "coordenadas")
+    public String coordenadas;
 
     @ColumnInfo (name = "muertes")
     public String muertes;
 
-    public Terremotos(String fecha_Hora, Double magnitud, String nom_disp, String coordenadas, String lugar, String muertes) {
+    public Terremotos(String fecha_Hora, Double magnitud, String nom_disp, String lugar, String coordenadas, String muertes) {
         this.fecha_Hora = fecha_Hora;
         this.magnitud = magnitud;
         this.nom_disp = nom_disp;
-        this.coordenadas = coordenadas;
         this.lugar = lugar;
+        this.coordenadas = coordenadas;
         this.muertes = muertes;
     }
 
