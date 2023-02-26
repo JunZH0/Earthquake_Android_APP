@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,12 +31,15 @@ public class FilterDialog extends DialogFragment {
     Spinner spnPais;
     Spinner spnMes;
     EditText txtAnio;
+    ArrayAdapter<String> adapterPaises;
+    ArrayAdapter<CharSequence> adapterMes;
+
+    private static final String PREFS_NAME = "GuardarFiltros";
     TerremotosDB db;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
 
         //Construimos el Dialog que retorna el método
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -50,6 +54,25 @@ public class FilterDialog extends DialogFragment {
         initSpinnerMes();
 
         initSpinnerPais();
+
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String savedPais = prefs.getString("pais", "");
+        String savedMes = prefs.getString("mes", "");
+        String savedAnio = prefs.getString("anio", "");
+
+        // Si hay filtros guardados, se muestran en los spinners
+        if (!TextUtils.isEmpty(savedPais)) {
+            spnPais.setSelection(adapterPaises.getPosition(savedPais));
+        }
+        if (!TextUtils.isEmpty(savedMes)) {
+            spnMes.setSelection(adapterMes.getPosition(savedMes));
+        }
+        if (!TextUtils.isEmpty(savedAnio)) {
+            txtAnio.setText(savedAnio);
+        } else {
+            txtAnio.setText("");
+        }
+
 
         builder.setTitle("Filtros").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -89,6 +112,20 @@ public class FilterDialog extends DialogFragment {
                             Toast.makeText(getActivity(), "No se ha seleccionado ningún filtro", Toast.LENGTH_SHORT).show();
                         }
 
+                        // Guardar los filtros en SharedPreferences
+                        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("pais", pais);
+                        editor.putString("mes", mes);
+                        // Si no se selecciona año, se guarda un string vacio ya que por defecto se guarda "Sin Filtros"
+                        if(anio.equals("Sin Filtros")){
+                            editor.putString("anio", "");
+                        } else {
+                            editor.putString("anio", anio);
+                        }
+                        editor.apply();
+
+
                         dialog.dismiss();
                     }
                 })
@@ -114,7 +151,7 @@ public class FilterDialog extends DialogFragment {
         // Agregar "Sin Filtro" al inicio de la lista
         paises.add(0, "Sin Filtros");
 
-        ArrayAdapter<String> adapterPaises = new ArrayAdapter<String>(getActivity(),
+        adapterPaises = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, paises);
 
         adapterPaises.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -124,10 +161,10 @@ public class FilterDialog extends DialogFragment {
 
     private void initSpinnerMes() {
         // agregar los datos al spinner meses con un array de strings en el archivo arrays.xml
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+        adapterMes = ArrayAdapter.createFromResource(getActivity(),
                 R.array.meses, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnMes.setAdapter(adapter);
+        adapterMes.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMes.setAdapter(adapterMes);
     }
 
     @Override
