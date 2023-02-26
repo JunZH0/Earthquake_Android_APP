@@ -55,23 +55,7 @@ public class FilterDialog extends DialogFragment {
 
         initSpinnerPais();
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String savedPais = prefs.getString("pais", "");
-        String savedMes = prefs.getString("mes", "");
-        String savedAnio = prefs.getString("anio", "");
-
-        // Si hay filtros guardados, se muestran en los spinners
-        if (!TextUtils.isEmpty(savedPais)) {
-            spnPais.setSelection(adapterPaises.getPosition(savedPais));
-        }
-        if (!TextUtils.isEmpty(savedMes)) {
-            spnMes.setSelection(adapterMes.getPosition(savedMes));
-        }
-        if (!TextUtils.isEmpty(savedAnio)) {
-            txtAnio.setText(savedAnio);
-        } else {
-            txtAnio.setText("");
-        }
+        guardarFiltros();
 
 
         builder.setTitle("Filtros").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
@@ -112,18 +96,7 @@ public class FilterDialog extends DialogFragment {
                             Toast.makeText(getActivity(), "No se ha seleccionado ningún filtro", Toast.LENGTH_SHORT).show();
                         }
 
-                        // Guardar los filtros en SharedPreferences
-                        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = prefs.edit();
-                        editor.putString("pais", pais);
-                        editor.putString("mes", mes);
-                        // Si no se selecciona año, se guarda un string vacio ya que por defecto se guarda "Sin Filtros"
-                        if(anio.equals("Sin Filtros")){
-                            editor.putString("anio", "");
-                        } else {
-                            editor.putString("anio", anio);
-                        }
-                        editor.apply();
+                        aplicarFiltrosSharedPreference(pais, mes, anio);
 
 
                         dialog.dismiss();
@@ -138,6 +111,43 @@ public class FilterDialog extends DialogFragment {
                         });
 
         return builder.create();
+    }
+
+    private void aplicarFiltrosSharedPreference(String pais, String mes, String anio) {
+        // Guardar los filtros en SharedPreferences
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        // Se crea un editor para poder modificar los valores
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("pais", pais);
+        editor.putString("mes", mes);
+        // Si no se selecciona año, se guarda un string vacio ya que por defecto se guarda "Sin Filtros"
+        if(anio.equals("Sin Filtros")){
+            editor.putString("anio", "");
+        } else {
+            editor.putString("anio", anio);
+        }
+        editor.apply();
+    }
+
+    private void guardarFiltros() {
+        // Usando la interfaz SharedPreferences, se guardan los filtros seleccionados por clave-valor
+        SharedPreferences prefs = getActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        String savedPais = prefs.getString("pais", "");
+        String savedMes = prefs.getString("mes", "");
+        String savedAnio = prefs.getString("anio", "");
+
+        // Comprueba si hay valores guardados y los aplica en los spinners
+        if (!TextUtils.isEmpty(savedPais)) {
+            spnPais.setSelection(adapterPaises.getPosition(savedPais));
+        }
+        if (!TextUtils.isEmpty(savedMes)) {
+            spnMes.setSelection(adapterMes.getPosition(savedMes));
+        }
+        if (!TextUtils.isEmpty(savedAnio)) {
+            txtAnio.setText(savedAnio);
+        } else {
+            txtAnio.setText("");
+        }
     }
 
     private void initSpinnerPais() {

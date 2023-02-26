@@ -16,10 +16,6 @@ public interface PaisesAfectadosDao {
     @Query("SELECT * FROM PAISES_AFECTADOS")
     public List<PaisesAfectados> getAll();
 
-    // TODO Implementar query con filtros
-
-    // seleccionar por pais y año
-
     @Query("SELECT DISTINCT pais FROM PAISES_AFECTADOS")
     public List<String> selectPaises();
 
