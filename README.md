@@ -2,18 +2,20 @@
 
 ## Android application that retrieves different earthquakes information from a local database.
 
-### 1. Preliminar design dark/light theme
+### 1. Final design dark/light theme
 
-![Captura desde 2023-02-20 11-05-22](https://user-images.githubusercontent.com/54965484/220077931-f90bbd7d-b315-40f5-a91e-f4e959ad34cb.png)
+![imagen](https://user-images.githubusercontent.com/54965484/221788837-9f7e46b7-7f62-4c88-8e02-809365f6d9c9.png) ![Captura desde 2023-02-28 08-53-40](https://user-images.githubusercontent.com/54965484/221788905-c6ed24da-8027-4a46-9c51-7b9d5d8fbc72.png)
+
+
 
 ### 2. Filter dialog 
 
-![Captura desde 2023-02-20 12-14-44](https://user-images.githubusercontent.com/54965484/220090476-3fef8868-24c5-4561-8688-3089b9a0e7fa.png)
+![imagen](https://user-images.githubusercontent.com/54965484/221789046-d61b39bb-0593-4319-8e9a-a8ce55182f54.png)
 
 
 ### 3. Earthquake information Recycle View
 
-![Captura desde 2023-02-20 11-23-44](https://user-images.githubusercontent.com/54965484/220082704-a421f09c-936e-43be-91cd-96fa6fe58db8.png)
+![imagen](https://user-images.githubusercontent.com/54965484/221789112-79ad06b0-7464-4a61-9d79-7fe30e35198c.png)
 
 
 
